@@ -34,7 +34,10 @@ class CalendarsController < ApplicationController
       plans.each do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
-      days = { :month => (@todays_date + x).month, :date => (@todays_date+x).day, :plans => today_plans}
+
+      wday_num = @todays_date.wday # wdayメソッドを用いて取得した数値
+      days_of_week = wdays[(wday_num + x) % 7] #(wday_num + x)を7で割った余りに対応する配列wdaysの番地の値
+      days = { :month => (@todays_date + x).month, :date => (@todays_date+x).day, :plans => today_plans, :wday => days_of_week}
       @week_days.push(days)
     end
 
